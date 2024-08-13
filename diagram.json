@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "author": "Phước Hoàn Hồ",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-breadboard-half", "id": "bb2", "top": -300.6, "left": -6.8, "attrs": {} },
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -57.6, "left": 254.44, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -70.8,
+      "left": -773.8,
+      "attrs": { "color": "red" }
+    },
+    { "type": "wokwi-membrane-keypad", "id": "keypad1", "top": -155.6, "left": 620, "attrs": {} },
+    { "type": "wokwi-servo", "id": "servo1", "top": 113.2, "left": 384, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 253.55,
+      "left": -720,
+      "attrs": { "value": "1000" }
+    },
+    { "type": "wokwi-pir-motion-sensor", "id": "pir2", "top": 90.4, "left": -631.38, "attrs": {} },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 117.6,
+      "left": 577.8,
+      "attrs": { "volume": "0.1" }
+    },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": 48.2, "left": -835.2, "attrs": {} },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": 147.2,
+      "left": -834.4,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -210.9,
+      "left": 532.2,
+      "attrs": { "temperature": "49", "humidity": "21" }
+    },
+    { "type": "wokwi-ds1307", "id": "rtc1", "top": 292.2, "left": -844.7, "attrs": {} },
+    {
+      "type": "wokwi-tm1637-7segment",
+      "id": "sevseg1",
+      "top": -19.24,
+      "left": -1000.97,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled1",
+      "top": 22.34,
+      "left": 441.83,
+      "attrs": { "i2cAddress": "0x3c" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "keypad1:R1", "esp:15", "white", [ "v19.2", "h-355.2", "v-86.4" ] ],
+    [ "keypad1:R3", "esp:0", "cyan", [ "v19.2", "h-374.7", "v-105.6" ] ],
+    [ "keypad1:R2", "esp:2", "yellow", [ "v19.2", "h-365.2", "v-96" ] ],
+    [ "keypad1:C1", "esp:16", "green", [ "v19.2", "h-393.7", "v-124.8" ] ],
+    [ "keypad1:C2", "esp:17", "blue", [ "v19.2", "h-403.2", "v-134.4" ] ],
+    [ "keypad1:C3", "esp:5", "violet", [ "v19.2", "h-412.95", "v-144" ] ],
+    [ "keypad1:C4", "esp:18", "gray", [ "v19.2", "h-422.7", "v-153.6" ] ],
+    [ "esp:5V", "bb2:bp.25", "red", [ "h-9.45", "v-230.4", "h48" ] ],
+    [ "dht1:GND", "bb2:bn.25", "black", [ "v9.6", "h-278.4" ] ],
+    [ "dht1:VCC", "bb2:bp.25", "red", [ "v9.6", "h-249.6" ] ],
+    [ "esp:GND.2", "bb2:bn.25", "black", [ "v-57.6", "h-57.6" ] ],
+    [ "dht1:SDA", "esp:19", "orange", [ "v38.4", "h-191.9", "v96" ] ],
+    [ "servo1:GND", "bb2:bn.25", "black", [ "h-19.2", "v-249.6", "h-68.8" ] ],
+    [ "servo1:V+", "bb2:bp.25", "red", [ "h-19.2", "v-259.1", "h-68.8" ] ],
+    [ "servo1:PWM", "esp:13", "green", [ "h-134.4", "v-76.6" ] ],
+    [ "bz1:1", "bb2:bn.25", "black", [ "h-240", "v-288", "h-68.8" ] ],
+    [ "bz1:2", "esp:12", "blue", [ "h-365.2", "v-115.2" ] ],
+    [ "oled1:VCC", "bb2:bp.25", "red", [ "v-115.2", "h-230.25" ] ],
+    [ "oled1:SDA", "esp:21", "blue", [ "v0" ] ],
+    [ "esp:4", "keypad1:R4", "magenta", [ "h9.6", "v115.2", "h384.2" ] ],
+    [ "oled1:SCL", "esp:22", "yellow", [ "v-9.6", "h-9.3", "v-38.4" ] ],
+    [ "oled1:GND", "bb2:bn.25", "black", [ "v-9.6", "h9.6", "v-105.6", "h-192" ] ]
+  ],
+  "dependencies": {}
+}
