@@ -5,23 +5,17 @@
   "parts": [
     { "type": "wokwi-breadboard-half", "id": "bb2", "top": -300.6, "left": -6.8, "attrs": {} },
     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -57.6, "left": 254.44, "attrs": {} },
-    {
-      "type": "wokwi-led",
-      "id": "led2",
-      "top": -70.8,
-      "left": -773.8,
-      "attrs": { "color": "red" }
-    },
+    { "type": "wokwi-led", "id": "led2", "top": 111.6, "left": 80.6, "attrs": { "color": "red" } },
     { "type": "wokwi-membrane-keypad", "id": "keypad1", "top": -155.6, "left": 620, "attrs": {} },
     { "type": "wokwi-servo", "id": "servo1", "top": 113.2, "left": 384, "attrs": {} },
     {
       "type": "wokwi-resistor",
       "id": "r2",
-      "top": 253.55,
-      "left": -720,
+      "top": 291.95,
+      "left": -278.4,
       "attrs": { "value": "1000" }
     },
-    { "type": "wokwi-pir-motion-sensor", "id": "pir2", "top": 90.4, "left": -631.38, "attrs": {} },
+    { "type": "wokwi-pir-motion-sensor", "id": "pir2", "top": -72.8, "left": -16.98, "attrs": {} },
     {
       "type": "wokwi-buzzer",
       "id": "bz1",
@@ -29,12 +23,20 @@
       "left": 577.8,
       "attrs": { "volume": "0.1" }
     },
-    { "type": "wokwi-relay-module", "id": "relay1", "top": 48.2, "left": -835.2, "attrs": {} },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay1",
+      "top": 99,
+      "left": -34.8,
+      "rotate": 270,
+      "attrs": {}
+    },
     {
       "type": "wokwi-photoresistor-sensor",
       "id": "ldr1",
-      "top": 147.2,
-      "left": -834.4,
+      "top": -19.5,
+      "left": 42.5,
+      "rotate": 90,
       "attrs": {}
     },
     {
@@ -44,12 +46,19 @@
       "left": 532.2,
       "attrs": { "temperature": "49", "humidity": "21" }
     },
-    { "type": "wokwi-ds1307", "id": "rtc1", "top": 292.2, "left": -844.7, "attrs": {} },
+    {
+      "type": "wokwi-ds1307",
+      "id": "rtc1",
+      "top": -81.5,
+      "left": -156.4,
+      "rotate": 270,
+      "attrs": {}
+    },
     {
       "type": "wokwi-tm1637-7segment",
       "id": "sevseg1",
-      "top": -19.24,
-      "left": -1000.97,
+      "top": 57.56,
+      "left": -242.57,
       "attrs": { "color": "red" }
     },
     {
@@ -84,7 +93,37 @@
     [ "oled1:SDA", "esp:21", "blue", [ "v0" ] ],
     [ "esp:4", "keypad1:R4", "magenta", [ "h9.6", "v115.2", "h384.2" ] ],
     [ "oled1:SCL", "esp:22", "yellow", [ "v-9.6", "h-9.3", "v-38.4" ] ],
-    [ "oled1:GND", "bb2:bn.25", "black", [ "v-9.6", "h9.6", "v-105.6", "h-192" ] ]
+    [ "oled1:GND", "bb2:bn.25", "black", [ "v-9.6", "h9.6", "v-105.6", "h-192" ] ],
+    [ "pir2:VCC", "bb2:bp.1", "red", [ "v19.2", "h-48", "v-153.6" ] ],
+    [ "pir2:GND", "bb2:bn.1", "black", [ "v9.6", "h47.74", "v-115.2", "h-57.6" ] ],
+    [ "ldr1:VCC", "bb2:bp.1", "red", [ "v9.6", "h-57.6", "v-67.2", "h-115.2", "v-153.6" ] ],
+    [ "ldr1:GND", "bb2:bn.1", "black", [ "v19.2", "h29.2", "v-201.6", "h-134.4" ] ],
+    [
+      "relay1:GND",
+      "bb2:bn.1",
+      "black",
+      [ "v9.6", "h38", "v-172.8", "h19.2", "v-134.4", "h-59.2" ]
+    ],
+    [ "relay1:VCC", "bb2:bp.1", "red", [ "v9.6", "h-28.8", "v-163.2", "h-19.2", "v-153.6" ] ],
+    [ "rtc1:5V", "bb2:bp.1", "red", [ "v19.2", "h95.6", "v-134.4" ] ],
+    [ "sevseg1:VCC", "bb2:bp.1", "red", [ "h9.6", "v-86.4", "h28.8", "v-134.4" ] ],
+    [
+      "sevseg1:GND",
+      "bb2:bn.1",
+      "black",
+      [ "h38.4", "v-57.6", "h96", "v-28.8", "h19.2", "v-115.2", "h-57.6" ]
+    ],
+    [ "relay1:COM", "bb2:bp.1", "red", [ "v-39.6", "h-59", "v-153.6" ] ],
+    [ "led2:C", "bb2:bn.1", "black", [ "v9.6", "h67.6", "v-249.6", "h-134.4" ] ],
+    [ "ldr1:AO", "esp:14", "green", [ "v28.8", "h125.5", "v-48" ] ],
+    [ "relay1:IN", "esp:27", "green", [ "v19.2", "h201.4", "v-144" ] ],
+    [ "pir2:OUT", "esp:26", "green", [ "v0", "h67.06", "v-96", "h144", "v134.4" ] ],
+    [ "sevseg1:DIO", "esp:32", "green", [ "h19.2", "v115.2", "h288", "v-182.4" ] ],
+    [ "rtc1:GND", "bb2:bn.1", "black", [ "v38.4", "h86.4", "v-144" ] ],
+    [ "sevseg1:CLK", "esp:33", "green", [ "h19.2", "v124.8", "h288", "v-172.8" ] ],
+    [ "led2:A", "relay1:NO", "green", [ "v0", "h9.6", "v28.8", "h-38.4", "v-134.4", "h-38.4" ] ],
+    [ "rtc1:SCL", "esp:22", "magenta", [ "v48", "h57.4", "v163.2", "h412.8", "v-220.8" ] ],
+    [ "rtc1:SDA", "esp:21", "purple", [ "v48", "h66.9", "v163.2", "h412.8", "v-192" ] ]
   ],
   "dependencies": {}
 }

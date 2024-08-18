@@ -8,7 +8,8 @@
 #include <ESP32Servo.h>
 #include <EEPROM.h> // the library for saving last state of components, store value in nvs flash
 #include <nvs_flash.h>
-
+#include "RTClib.h"
+#include "TM1637.h"
 
 // button
 #define BUTTON 23
@@ -33,6 +34,13 @@ extern uint8_t iconUnlocked[8] PROGMEM;
 
 // buzzer
 #define BUZZER 12
+
+// RTC
+
+
+// TM1637
+#define DIO_PIN 32
+#define CLK_PIN 33
 
 /*
     Security handling
@@ -77,6 +85,7 @@ class Door {
         U8X8_SSD1306_128X64_NONAME_HW_I2C display; // Screen
         DHT dht; // dht
         Keypad keypad; // keypad
+        TM1637 tm; // tm
         Door(); // initialize constructor for variables
         void init(); // initialize variables
         void lock(); // lock the door
@@ -89,6 +98,7 @@ class Door {
         void safeLockedLogic(); // logic when door is locked
         void showStaticScreen(); // screen show when someone does not type key to open door.
         void doorLogic(); // handle all logic in door.
+        void displayTime(RTC_DS1307 rtc);
 };
 
 /* Some function for door */

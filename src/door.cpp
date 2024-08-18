@@ -106,7 +106,8 @@ void Security::setLock(bool locked) {
     EEPROM.commit();
 }
 
-Door::Door() : display(U8X8_PIN_NONE), dht(DHT_PIN, DHT22), keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS) {} 
+Door::Door() : display(U8X8_PIN_NONE), dht(DHT_PIN, DHT22), keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS), tm(CLK_PIN, DIO_PIN) {}
+
 
 void Door::init() {
     dht.begin();
@@ -114,6 +115,8 @@ void Door::init() {
     servo.attach(SERVO_PIN);
     pinMode(BUTTON, INPUT_PULLUP);
     display.setFont(u8x8_font_8x13_1x2_f);
+    tm.init();
+    tm.set(BRIGHT_TYPICAL);
 
     // Make sure the physical lock is synced with the last state
     if (security.locked()) {
@@ -297,4 +300,13 @@ void Door::doorLogic() {
             last_update = millis();
         }
     }
+}
+
+void Door::displayTime(RTC_DS1307 rtc) {
+    DateTime now = rtc.now();
+    tm.display(0, int(now.hour()/10));
+    tm.display(1, now.hour()%10);
+    tm.display(2, int(now.minute()/10));
+    tm.display(3, now.minute()%10);
+    tm.point(true);
 }
