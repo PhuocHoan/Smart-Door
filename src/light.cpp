@@ -13,7 +13,7 @@ void Light::run() {
     int motion = digitalRead(PIR_PIN);
     unsigned long currentTime = millis();
   
-    if (light_sensor_value < 2500) {
+    if (light_sensor_value > 2500) {
     // Daytime
         off();
         state = false;
