@@ -3,7 +3,7 @@
 #include <Keypad.h>
 #include <U8g2lib.h>
 #include <ESP32Servo.h>
-#include <EEPROM.h> // the library for saving last state of components, store value in nvs flash
+#include <EEPROM.h> // the library for saving data in nvs flash
 #include <nvs_flash.h> // nvs flash
 #include <WiFi.h>
 #include <PubSubClient.h>
