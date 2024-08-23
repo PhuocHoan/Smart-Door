@@ -74,8 +74,8 @@ void mqttConnect() {
             Serial.println("connected");
 
             //***Subscribe all topic you need***
-            mqttClient.subscribe("/group_21/web/temperature/upper_bound");
-            mqttClient.subscribe("/group_21/web/temperature/lower_bound");
+            // mqttClient.subscribe("/group_21/web/temperature/upper_bound");
+            // mqttClient.subscribe("/group_21/web/temperature/lower_bound");
             mqttClient.subscribe("/group_21/web/door");
         }
         else {
@@ -95,12 +95,12 @@ void callback(char* topic, byte* message, unsigned int length) {
     Serial.println(strMsg);
 
     // ***Code here to process the received package***
-    if (!strcmp(topic, "/group_21/web/temperature/upper_bound")) {
-        max_temp = (byte)strMsg.toInt();
-    } else if (!strcmp(topic, "/group_21/web/temperature/lower_bound")) {
-        min_temp = (byte)strMsg.toInt();
-    } else if (!strcmp(topic, "/group_21/web/door")) {
-        bool tmp = strMsg.toInt();
+    // if (!strcmp(topic, "/group_21/web/temperature/upper_bound")) {
+    //     max_temp = (byte)strMsg.toInt();
+    // } else if (!strcmp(topic, "/group_21/web/temperature/lower_bound")) {
+    //     min_temp = (byte)strMsg.toInt();
+    if (!strcmp(topic, "/group_21/web/door")) {
+        bool tmp = (bool)strMsg.toInt();
         if (tmp) {
             security.unlock();
             unlock();
@@ -192,12 +192,6 @@ void showHomeScreen() {
     mqttClient.publish("/group_21/local/temperature/temperature", String(temp).c_str());
     mqttClient.publish("/group_21/local/humidity", String(humid).c_str());
 
-    // // send warning to mqtt server
-    if (temp > max_temp) {
-        mqttClient.publish("/group_21/local/temperature/warning", String("high").c_str()); // temperature exceeds threshold
-    } else if (temp < min_temp) {
-        mqttClient.publish("/group_21/local/temperature/warning", String("low").c_str()); // temperature fall behind threshold
-    }
 }
 
 void showUnlockMessage() {
@@ -330,6 +324,8 @@ void lockedLogic() {
 }
 
 void doorLogic() {
+    displayTime(rtc);
+    l.run();
     if (!flag) {
         starterPublish();
         flag = true;
@@ -358,8 +354,13 @@ void doorLogic() {
 
 void setup() {
     Serial.begin(115200);
+
     Serial.print("Connecting to WiFi");
     wifiConnect();
+    mqttClient.setServer(MQTT_SERVER, PORT);
+    mqttClient.setCallback(callback);
+    mqttClient.setKeepAlive(90);
+    
     if (!rtc.begin()) {
         Serial.println("Couldn't find RTC");
         Serial.flush();
@@ -368,15 +369,12 @@ void setup() {
     l.init();
     tm.init();
     tm.set(BRIGHT_TYPICAL);
+    digitalWrite(RELAY_PIN,LOW);
     pinMode(BUZZER_PIN, OUTPUT);
     servo.attach(SERVO_PIN);
     dht.begin();
     display.begin();
     display.setFont(u8x8_font_8x13_1x2_f);
-
-    mqttClient.setServer(MQTT_SERVER, PORT);
-    mqttClient.setCallback(callback);
-    mqttClient.setKeepAlive(90);
 
     showHomeScreen();
 }
@@ -387,8 +385,5 @@ void loop() {
         mqttConnect();
     }
     mqttClient.loop();
-
     doorLogic();
-    displayTime(rtc);
-    l.run();
 }
